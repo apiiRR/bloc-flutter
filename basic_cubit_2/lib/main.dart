@@ -26,12 +26,22 @@ class CounterCubit extends Cubit<int> {
 
   int initialData;
 
+  int? current;
+  int? next;
+
   void tambahData() {
     emit(state + 1);
   }
 
   void kurangData() {
     emit(state - 1);
+  }
+
+  @override
+  void onChange(Change<int> change) {
+    super.onChange(change);
+    current = change.currentState;
+    next = change.nextState;
   }
 }
 
@@ -66,9 +76,24 @@ class MyHomePage extends StatelessWidget {
                 //   );
                 // }
                 return Center(
-                  child: Text(
-                    "${snap.data}",
-                    style: const TextStyle(fontSize: 50),
+                  child: Column(
+                    children: [
+                      Text(
+                        "${snap.data}",
+                        style: const TextStyle(fontSize: 50),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Current : ${myCounter.current}",
+                        style: const TextStyle(fontSize: 50),
+                      ),
+                      Text(
+                        "Next : ${myCounter.next}",
+                        style: const TextStyle(fontSize: 50),
+                      ),
+                    ],
                   ),
                 );
               }),
