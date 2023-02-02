@@ -12,35 +12,26 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("BLOC BUILDER"),
+        title: const Text("BLOC LISTENER"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocBuilder<Counter, int>(
-              bloc: myCounter,
-              buildWhen: (previous, current) {
-                if (current == 5) {
-                  return true;
-                } else {
-                  return false;
-                }
-              },
-              builder: (context, state) {
-                return Text(
-                  "$state",
-                  style: const TextStyle(fontSize: 50),
-                );
-              }),
-          // StreamBuilder(
-          //     initialData: myCounter.init,
-          //     stream: myCounter.stream,
-          //     builder: (context, snap) {
-          //       return Text(
-          //         "${snap.data}",
-          //         style: const TextStyle(fontSize: 50),
-          //       );
-          //     }),
+          BlocListener(
+            bloc: myCounter,
+            listener: (context, state) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text("DIJALANKAN")));
+            },
+            child: BlocBuilder<Counter, int>(
+                bloc: myCounter,
+                builder: (context, state) {
+                  return Text(
+                    "$state",
+                    style: const TextStyle(fontSize: 50),
+                  );
+                }),
+          ),
           const SizedBox(
             height: 50,
           ),
