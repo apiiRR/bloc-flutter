@@ -1,15 +1,16 @@
 import 'package:bloc/bloc.dart';
 
-enum CounterEvent { decrement, increment }
+import 'counter_event.dart';
 
 class CounterBloc extends Bloc<CounterEvent, int> {
-  CounterBloc() : super(0) {
-    on<CounterEvent>((event, emit) => {
-          if (event == CounterEvent.decrement)
-            {emit(state - 1)}
-          else
-            {emit(state + 1)}
-        });
+  CounterBloc(int initial) : super(initial) {
+    on<DecrementCounter>((event, emit) {
+      emit((state - 1) * event.value);
+    });
+
+    on<IncrementCounter>((event, emit) {
+      emit((state + 1) * event.value);
+    });
   }
 
   @override
