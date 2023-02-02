@@ -17,21 +17,18 @@ class Homepage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocListener(
-            bloc: myCounter,
-            listener: (context, state) {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(const SnackBar(content: Text("DIJALANKAN")));
-            },
-            child: BlocBuilder<Counter, int>(
-                bloc: myCounter,
-                builder: (context, state) {
-                  return Text(
-                    "$state",
-                    style: const TextStyle(fontSize: 50),
-                  );
-                }),
-          ),
+          BlocConsumer<Counter, int>(
+              bloc: myCounter,
+              builder: (context, state) {
+                return Text(
+                  "$state",
+                  style: const TextStyle(fontSize: 50),
+                );
+              },
+              listener: (context, state) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(const SnackBar(content: Text("DIJALANKAN")));
+              }),
           const SizedBox(
             height: 50,
           ),
