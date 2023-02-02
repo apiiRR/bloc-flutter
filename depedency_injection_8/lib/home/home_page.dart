@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/counter.dart';
+import 'other/other_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final Counter myCounter = BlocProvider.of<Counter>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Depedency Injection"),
@@ -18,7 +23,9 @@ class HomePage extends StatelessWidget {
               child: Material(
                 color: Colors.green,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    myCounter.decrement();
+                  },
                   child: const SizedBox(
                     height: 100,
                     width: 100,
@@ -42,11 +49,14 @@ class HomePage extends StatelessWidget {
                   child: Container(
                     color: Colors.blue,
                     margin: const EdgeInsets.all(20),
-                    child: const Center(
-                      child: Text(
-                        "0",
-                        style: TextStyle(color: Colors.white, fontSize: 50),
-                      ),
+                    child: Center(
+                      child: BlocBuilder(
+                          bloc: myCounter,
+                          builder: (context, state) => Text(
+                                "$state",
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 50),
+                              )),
                     ),
                   ),
                 ),
@@ -57,7 +67,9 @@ class HomePage extends StatelessWidget {
               child: Material(
                 color: Colors.green,
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    myCounter.increment();
+                  },
                   child: const SizedBox(
                     height: 100,
                     width: 100,
@@ -71,6 +83,18 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => BlocProvider.value(
+                        value: myCounter,
+                        child: const OtherPage(),
+                      )));
+        },
+        child: const Icon(Icons.arrow_forward),
       ),
     );
   }

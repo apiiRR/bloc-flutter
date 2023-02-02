@@ -12,14 +12,15 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: BlocProvider(
         create: (context) => Counter(),
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: const HomePage(),
-        ));
+        child: const HomePage(),
+      ),
+    );
   }
 }
