@@ -19,15 +19,33 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            BlocBuilder<Counter, int>(
-              bloc: myCounter,
-              builder: (context, state) {
-                return Text(
-                  "$state",
-                  style: const TextStyle(fontSize: 50),
-                );
-              },
-            ),
+            MultiBlocListener(
+                listeners: [
+                  BlocListener<Counter, int>(
+                    listenWhen: (prev, cur) {
+                      if (cur > 10) {
+                        return true;
+                      } else {
+                        return false;
+                      }
+                    },
+                    listener: (context, state) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        content: Text("LISTENER"),
+                        duration: Duration(milliseconds: 200),
+                      ));
+                    },
+                  )
+                ],
+                child: BlocBuilder<Counter, int>(
+                  bloc: myCounter,
+                  builder: (context, state) {
+                    return Text(
+                      "$state",
+                      style: const TextStyle(fontSize: 50),
+                    );
+                  },
+                )),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
