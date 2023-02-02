@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/counter.dart';
-import 'other/other_page.dart';
+import '../other/other_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -86,13 +86,14 @@ class HomePage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (_) => BlocProvider.value(
-                        value: myCounter,
-                        child: const OtherPage(),
-                      )));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (_) => BlocProvider.value(
+          //               value: myCounter,
+          //               child: const OtherPage(),
+          //             )));
+          Navigator.pushNamed(context, "/other");
         },
         child: const Icon(Icons.arrow_forward),
       ),
