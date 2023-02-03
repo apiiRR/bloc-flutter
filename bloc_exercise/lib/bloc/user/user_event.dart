@@ -19,3 +19,9 @@ class DeleteUserEvent extends UserEvent {
 
   final User newUser;
 }
+
+class EditUserEvent extends UserEvent {
+  const EditUserEvent(this.newUser);
+
+  final User newUser;
+}

@@ -28,8 +28,12 @@ class HomePage extends StatelessWidget {
               User user = state.allUsers[index];
               return ListTile(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => const EditPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => EditPage(
+                                user: user,
+                              )));
                 },
                 leading: CircleAvatar(
                   child: Text("${index + 1}"),
