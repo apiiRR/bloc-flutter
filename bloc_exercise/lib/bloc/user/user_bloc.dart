@@ -9,8 +9,14 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc() : super(UserInitial([])) {
-    on<UserEvent>((event, emit) {
-      // TODO: implement event handler
+    on<AddUserEvent>((event, emit) {
+      try {
+        emit(UserLoading(state.allUsers));
+        state.allUsers.add(event.newUser);
+        emit(UserFinish(state.allUsers));
+      } catch (e) {
+        emit(UserError(state.allUsers));
+      }
     });
   }
 }
